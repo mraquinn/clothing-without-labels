@@ -59,6 +59,10 @@
   h1 .l1{animation:up .8s .45s cubic-bezier(.2,.8,.3,1) forwards}
   h1 .l2{animation:up .8s .58s cubic-bezier(.2,.8,.3,1) forwards}
   h1 .l3{animation:up .8s .71s cubic-bezier(.2,.8,.3,1) forwards;color:var(--signal)}
+  h1 .strike{position:relative;display:inline-block}
+  h1 .strike::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
+    background:var(--signal);transform:scaleX(0);transform-origin:left;
+    animation:strike .9s 1.05s cubic-bezier(.7,0,.25,1) forwards}
 
   .lede{font-family:'Newsreader',serif;font-size:clamp(1.2rem,3.2vw,1.75rem);line-height:1.4;
     color:var(--bone);max-width:26ch;margin-top:2.2rem;opacity:0;animation:up .8s 1.05s forwards}
@@ -135,13 +139,13 @@
 
       <h1>
         <span class="l l1">Clothing</span>
-        <span class="l l2">without</span>
+        <span class="l l2"><span class="strike">without</span></span>
         <span class="l l3">labels.</span>
       </h1>
 
       <p class="strap">Designed for you, by people like you.</p>
-      <p class="lede">No tag scratching your neck. <em>No label telling you what you are.</em></p>
-      <p class="twobit">Wearable kit from the <b>Not Defined</b> collective — made for people like you, by people like you.</p>
+      <p class="lede">No tag scratching your neck.<br/><em>No label telling you what you are.</em></p>
+      <p class="twobit">Wearable kit from the <b>Not Defined</b> collective. <br/>Made for people like you, by people like you.</p>
 
       <div class="capture">
         <p class="ask">First drop is coming. <b>Get the first look.</b></p>
