@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're first in line — Clothing Without Labels</title>
+<meta name="description" content="You're confirmed. We'll find you when the first drop lands.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316161a'/%3E%3Ctext x='3' y='24' font-family='Arial Black,sans-serif' font-weight='900' font-size='22' fill='%23efe9dd'%3END%3C/text%3E%3Crect x='15' y='13' width='14' height='2.5' rx='1' fill='%23ff6a00'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#16161a; --ink2:#1f1f25; --ink3:#2a2a32;
+    --bone:#efe9dd; --bone-dim:#a8a399;
+    --signal:#ff6a00; --signal-deep:#e85d00;
+    --line:rgba(239,233,221,.13); --line-strong:rgba(239,233,221,.26);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--ink);color:var(--bone);
+    font-family:'Archivo',system-ui,sans-serif;line-height:1.6;letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;
+    display:flex;flex-direction:column;
+  }
+  ::selection{background:var(--signal);color:var(--ink)}
+  a{color:var(--signal);text-underline-offset:3px}
+  .wrap{width:100%;max-width:680px;margin:0 auto;padding:0 26px}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(55vw 45vh at 85% 20%, rgba(255,106,0,.07), transparent 65%)}
+  .layer{position:relative;z-index:1;flex:1;display:flex;flex-direction:column}
+
+  .status{border-bottom:1px solid var(--line)}
+  .status .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+  .status a{color:var(--bone);text-decoration:none;font-weight:500}
+
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:10vh 0 6vh;text-align:center}
+
+  /* struck label */
+  .labelwrap{opacity:0;animation:up .8s .2s forwards;margin-bottom:2.2rem}
+  .carelabel{
+    display:inline-block;background:var(--bone);color:#2a2620;border-radius:3px;
+    padding:.8rem 1.2rem;font-family:'IBM Plex Mono',monospace;font-size:.68rem;line-height:1.85;
+    letter-spacing:.04em;text-transform:uppercase;position:relative;
+    box-shadow:0 14px 40px -16px rgba(0,0,0,.7);transform:rotate(-1.2deg);
+  }
+  .carelabel .stitch{position:absolute;inset:4px;border:1px dashed rgba(42,38,32,.28);border-radius:2px;pointer-events:none}
+  .carelabel .crossout{position:absolute;left:6%;right:6%;top:50%;height:3.5px;background:var(--signal);
+    transform:scaleX(0);transform-origin:left;border-radius:2px;
+    box-shadow:0 0 14px 1px rgba(255,106,0,.6);
+    animation:strike 1s 1s cubic-bezier(.7,0,.25,1) forwards}
+  .carelabel .struck{opacity:.5}
+
+  .mark{
+    font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;text-transform:uppercase;
+    font-size:clamp(1.6rem,6vw,3rem);line-height:.92;letter-spacing:-.02em;
+    opacity:0;animation:up .8s .5s forwards;
+  }
+  .mark .s{position:relative;display:inline-block;color:var(--signal)}
+  .mark .s::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
+    background:#ffffff;transform:scaleX(0);transform-origin:left;
+    animation:strike .9s 1.3s cubic-bezier(.7,0,.25,1) forwards}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--signal);margin-top:1.8rem;
+    opacity:0;animation:fade .8s 1.5s forwards;
+  }
+  .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--signal);
+    box-shadow:0 0 12px 1px rgba(255,106,0,.7);flex-shrink:0}
+
+  h1{
+    font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:900;text-transform:uppercase;
+    font-size:clamp(2.8rem,12vw,6rem);line-height:.88;letter-spacing:-.03em;
+    margin-top:1.4rem;
+    opacity:0;animation:up .8s 1.7s cubic-bezier(.2,.8,.3,1) forwards;
+  }
+  h1 em{display:block;color:var(--signal);font-style:normal}
+
+  .sub{
+    font-family:'Newsreader',serif;font-style:italic;
+    font-size:clamp(1.2rem,3.2vw,1.65rem);line-height:1.4;
+    color:var(--bone);max-width:26ch;margin:1.8rem auto 0;
+    opacity:0;animation:up .8s 1.9s forwards;
+  }
+
+  .pull{
+    font-family:'IBM Plex Mono',monospace;font-size:clamp(.74rem,1.8vw,.88rem);
+    letter-spacing:.06em;color:var(--bone-dim);
+    margin:2.2rem auto 0;max-width:40ch;line-height:1.6;
+    opacity:0;animation:fade .8s 2.1s forwards;
+  }
+  .pull b{color:var(--bone);font-weight:500}
+
+  .share-wrap{margin-top:3rem;opacity:0;animation:up .8s 2.3s forwards}
+  .share-label{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--bone-dim);margin-bottom:1.1rem}
+  .share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .share-btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.76rem;font-weight:600;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:.75rem 1.2rem;border-radius:9px;border:1px solid var(--line-strong);
+    background:var(--ink2);color:var(--bone);cursor:pointer;text-decoration:none;
+    transition:border-color .2s,background .2s;
+  }
+  .share-btn:hover{border-color:var(--signal);background:var(--ink3)}
+  .share-btn.primary{background:var(--signal);color:var(--ink);border-color:var(--signal)}
+  .share-btn.primary:hover{background:var(--signal-deep);border-color:var(--signal-deep)}
+  .copied{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+    color:var(--signal);margin-top:.8rem;height:1.2em;transition:opacity .3s;opacity:0}
+  .copied.show{opacity:1}
+
+  footer{border-top:1px solid var(--line);padding:2.4rem 0}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  .flink{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.06em;color:var(--bone-dim)}
+  .flink a{font-weight:500}
+  .copyr{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);opacity:.7}
+
+  @keyframes fade{to{opacity:1}}
+  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes strike{to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .labelwrap,.mark,.badge,h1,.sub,.pull,.share-wrap{opacity:1}
+    .mark .s::after,.carelabel .crossout{transform:scaleX(1)}
+    .carelabel .struck{opacity:.5}
+  }
+  @media (max-width:560px){footer .wrap{flex-direction:column;align-items:flex-start;gap:.8rem}}
+</style>
+</head>
+<body>
+<div class="layer">
+
+  <div class="status">
+    <div class="wrap">
+      <a href="/">← Clothing Without Labels</a>
+      <span>clothingwithoutlabels.co.uk</span>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <div class="labelwrap">
+        <div class="carelabel">
+          <span class="stitch"></span>
+          <span class="crossout"></span>
+          <span class="struck">
+            no fixed size · no category<br>
+            label removed
+          </span>
+        </div>
+      </div>
+
+      <div class="mark">Clothing Without <span class="s">Labels</span></div>
+      <div class="badge">You're first in line</div>
+
+      <h1>No<em>labels.</em></h1>
+
+      <p class="sub">We'll find you when the first drop lands. One message, nothing else.</p>
+
+      <p class="pull">
+        <b>No tag on the collar.</b><br>
+        No label on you either.<br>
+        Part of <a href="https://notdefined.co.uk">Not Defined</a> — built for you, by people like you.
+      </p>
+
+      <div class="share-wrap">
+        <div class="share-label">Know someone who'd wear this?</div>
+        <div class="share-row">
+          <a class="share-btn primary" id="copyLink" href="#">Copy the link</a>
+          <a class="share-btn" id="shareWhatsApp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
+        </div>
+        <div class="copied" id="copied">Link copied.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="flink">The collective lives at <a href="https://notdefined.co.uk">notdefined.co.uk</a></span>
+      <span class="copyr">© Not Defined</span>
+    </div>
+  </footer>
+
+</div>
+<script>
+  const URL = "https://clothingwithoutlabels.co.uk";
+  const TEXT = "Just signed up for Clothing Without Labels — no tags, no labels on the clothes or on you. Part of the Not Defined collective. First drop coming soon.";
+
+  document.getElementById('shareWhatsApp').href =
+    `https://wa.me/?text=${encodeURIComponent(TEXT + ' ' + URL)}`;
+  document.getElementById('shareTwitter').href =
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(TEXT)}&url=${encodeURIComponent(URL)}`;
+
+  document.getElementById('copyLink').addEventListener('click', async (e)=>{
+    e.preventDefault();
+    try{
+      await navigator.clipboard.writeText(URL);
+      const c=document.getElementById('copied');
+      c.classList.add('show');
+      setTimeout(()=>c.classList.remove('show'), 2200);
+    }catch{}
+  });
+</script>
+</body>
+</html>
