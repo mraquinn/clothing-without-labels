@@ -36,7 +36,6 @@
 
   main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:7vh 0 5vh}
 
-  /* the signature: a garment care-label being struck out */
   .labelwrap{opacity:0;animation:up .8s .3s forwards;margin-bottom:3rem}
   .carelabel{
     display:inline-block;background:var(--bone);color:#2a2620;border-radius:3px;
@@ -46,7 +45,6 @@
   }
   .carelabel .stitch{position:absolute;inset:5px;border:1px dashed rgba(42,38,32,.28);border-radius:2px;pointer-events:none}
   .carelabel .line{position:relative;white-space:nowrap}
-  /* the strike sweeping across the whole label */
   .carelabel .crossout{position:absolute;left:6%;right:6%;top:50%;height:4px;background:var(--signal);
     transform:scaleX(0);transform-origin:left;border-radius:2px;
     box-shadow:0 0 14px 1px rgba(255,255,255,1);
@@ -59,10 +57,11 @@
   h1 .l1{animation:up .8s .45s cubic-bezier(.2,.8,.3,1) forwards}
   h1 .l2{animation:up .8s .58s cubic-bezier(.2,.8,.3,1) forwards}
   h1 .l3{animation:up .8s .71s cubic-bezier(.2,.8,.3,1) forwards;color:var(--signal)}
-  h1 .strike{position:relative;display:inline-block}
-  h1 .strike::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
-    background:var(--signal);transform:scaleX(0);transform-origin:left;
-    animation:strike .9s 1.05s cubic-bezier(.7,0,.25,1) forwards}
+  /* strike on labels — white over orange */
+  .strike{position:relative;display:inline-block}
+  .strike::after{content:"";position:absolute;left:-.03em;right:-.03em;top:54%;height:.07em;
+    background:#ffffff;transform:scaleX(0);transform-origin:left;
+    animation:strike .9s 1.2s cubic-bezier(.7,0,.25,1) forwards}
 
   .lede{font-family:'Newsreader',serif;font-size:clamp(1.2rem,3.2vw,1.75rem);line-height:1.4;
     color:var(--bone);max-width:26ch;margin-top:2.2rem;opacity:0;animation:up .8s 1.05s forwards}
@@ -107,7 +106,7 @@
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important}
     .labelwrap,.strap,.lede,.twobit,.capture,h1 .l{opacity:1}
-    .carelabel .crossout{transform:scaleX(1)}
+    .carelabel .crossout,.strike::after{transform:scaleX(1)}
     .dot{animation:none}
   }
   @media (max-width:560px){footer .wrap{flex-direction:column;align-items:flex-start;gap:.8rem}}
@@ -140,8 +139,8 @@
 
       <h1>
         <span class="l l1">Clothing</span>
-        <span class="l l2"><span class="strike">without</span></span>
-        <span class="l l3">labels.</span>
+        <span class="l l2">Without</span>
+        <span class="l l3"><span class="strike">labels.</span></span>
       </h1>
 
       <p class="strap">Designed for you, by people like you.</p>
@@ -176,13 +175,8 @@
 </div>
 
 <script>
-  // email capture → Kit, via your Cloudflare Worker proxy
-  // ───────────────────────────────────────────────────────────────
-  // The Kit API key lives in the Worker (server-side), NOT here.
-  // Use the SAME Worker URL as the collective page.
   const WORKER_URL = "https://nd-signup.subsetc.workers.dev";
-  const FORM = "clothing";   // this page = the Clothes Without Labels form
-  // ───────────────────────────────────────────────────────────────
+  const FORM = "clothing";
 
   (function(){
     const form=document.getElementById('signup');
